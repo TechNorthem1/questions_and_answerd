@@ -2,6 +2,9 @@ proceso de instalacion
 # crear entorno virtual
 python -m venv venv
 
+# activar entorno virtual
+venv\Scritp\activate
+
 # instalar librerias del archivo requirements
 pip install -r requirements.txt
 
