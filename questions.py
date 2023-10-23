@@ -3,13 +3,15 @@ import pandas as pd
 import winsound
 import time
 
+TOKEN = "Bearer APP_USR-1980722105262368-102312-bd9ccc8737153e15ccce89e7b7cae8ed-194549496"
+
 
 def all_questions(offset):
   url = f"https://api.mercadolibre.com/my/received_questions/search?offset={offset}&limit=50"
 
   payload = {}
   headers = {
-    'Authorization': 'Bearer APP_USR-3388194646414282-102010-2ba4ebab775b16719f999be0bbf8d269-194549496'
+    'Authorization': TOKEN
   }
 
   response = requests.request("GET", url, headers=headers, data=payload)
@@ -32,7 +34,7 @@ def questions_by_item_id(item_id):
 
 
   headers = {
-    'Authorization': 'Bearer APP_USR-3388194646414282-102010-2ba4ebab775b16719f999be0bbf8d269-194549496'
+    'Authorization': TOKEN
   }
 
   response = requests.request("GET", url, headers=headers)
@@ -41,7 +43,7 @@ def questions_by_item_id(item_id):
   data_response = []
 
   for question in questions:
-    data_response.append({"question": question["text"], "answer": question["answer"]["text"] if question["answer"] else "" })
+    data_response.append({"item_id":question["item_id"], "question": question["text"], "answer": question["answer"]["text"] if question["answer"] else "" })
 
   return data_response
 
@@ -51,7 +53,7 @@ if __name__ == '__main__':
     
   questions_by_item = []
 
-  for offset in range(1, 50):
+  for offset in range(1, 2):
     questions = all_questions(offset)
     for question in questions:
       item_id = question["item_id"]
@@ -59,7 +61,7 @@ if __name__ == '__main__':
       questions_by_item.extend(questions_for_item)  # Añade las preguntas a la lista principal
 
   # Crear un DataFrame con las nuevas preguntas
-  new_data = pd.DataFrame(questions_by_item, columns=["question", "answer"])
+  new_data = pd.DataFrame(questions_by_item, columns=["item_id", "question", "answer"])
 
   # Leer el archivo CSV existente
   try:
