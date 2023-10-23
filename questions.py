@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 import winsound
-import time
+
 
 TOKEN = "Bearer APP_USR-1980722105262368-102312-bd9ccc8737153e15ccce89e7b7cae8ed-194549496"
 
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     
   questions_by_item = []
 
-  for offset in range(1, 2):
+  for offset in range(0, 50):
     questions = all_questions(offset)
     for question in questions:
       item_id = question["item_id"]
